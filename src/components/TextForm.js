@@ -15,17 +15,9 @@ export default function TextForm(props) {
     props.showAlert("Converted to Lowercase!", "success");
   }
 
-  const handleCopyClick = async () => {
-      try {
-          await window.navigator.clipboard.writeText(text);
-          alert("Copied to clipboard!");
-      } catch (err) {
-          console.error(
-              "Unable to copy to clipboard.",
-              err
-          );
-          alert("Copy to clipboard failed.");
-      }
+  const handleCopyClick = () => {
+      navigator.clipboard.writeText(text);
+      props.showAlert("Copt to clipboard!", "success");
   };
 
   const handleDownload = () => {
@@ -58,7 +50,7 @@ export default function TextForm(props) {
       </div>
       <div className="container my-3" style={{color: props.mode==='dark'?'white':'black'}}>
         <h2>Your text summary</h2>
-        <p>{text.split(" ").filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
+        <p>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
         <p>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes read</p>
         <h2>Preview</h2>
         <p>{text.length>0?text:'Enter something in the textbox above to preview it...'}</p>
